@@ -1,0 +1,23 @@
+{
+  "name": "webpack-learning",
+  "version": "1.0.0",
+  "description": "Webpack learning project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "prod": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seybo/webpack-learning.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Seybo/webpack-learning/issues"
+  },
+  "homepage": "https://github.com/Seybo/webpack-learning#readme",
+  "devDependencies": {
+    "webpack": "^2.5.1"
+  }
+}
