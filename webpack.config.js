@@ -3,16 +3,19 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './src/app.js',
+  entry: {
+    app: './src/app.js', 
+    contact: './src/contact.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
       { test: /\.scss$/, 
         use: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
+          fallback: 'style-loader',
           use: ['css-loader', 'sass-loader'],
           publicPath: '/dist' 
         })
@@ -27,8 +30,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    stats: 'errors-only',
-    open: true
+    stats: 'errors-only'
+    //open: true // to autoopen page on server start
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -37,7 +40,15 @@ module.exports = {
         //collapseWhitespace: true
       //},
       hash: true,
-      template: './src/index.html', // Load a custom template (ejs by default see the FAQ for details)
+      excludeChunks: ['contact'],
+      template: './src/index.html' // Load a custom template (ejs by default see the FAQ for details)
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Contact Page',
+      hash: true,
+      chunks: ['contact'],
+      filename: 'contact.html',
+      template: './src/contact.html' 
     }),
     new ExtractTextPlugin({
       filename: "app.css",
