@@ -13,9 +13,14 @@ module.exports = {
       { test: /\.scss$/, 
         use: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: ['css-loader', 'sass-loader'],
+          use: ['css-loader', 'sass-loader'],
           publicPath: '/dist' 
         })
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
       }
     ]
   },
