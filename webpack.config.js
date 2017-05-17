@@ -24,6 +24,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.pug$/,
+        loaders: ['html-loader', 'pug-html-loader']
       }
     ]
   },
@@ -41,7 +45,7 @@ module.exports = {
       //},
       hash: true,
       excludeChunks: ['contact'],
-      template: './src/index.html' // Load a custom template (ejs by default see the FAQ for details)
+      template: './src/index.pug' // Load a custom template (ejs by default see the FAQ for details)
     }),
     new HtmlWebpackPlugin({
       title: 'Contact Page',
