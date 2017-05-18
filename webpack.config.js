@@ -3,6 +3,15 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
+const isProd = process.env.NODE_ENV === 'productuon';
+const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
+const cssProd = ExtractTextPlugin.extract({
+  fallback: 'style-loader',
+  use: ['css-loader', 'sass-loader'],
+  publicPath: '/dist' 
+});
+var cssConfig = isProd ? cssProd : cssDev;
+
 module.exports = {
   entry: {
     app: './src/app.js', 
@@ -15,12 +24,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.scss$/, 
-        //use: ExtractTextPlugin.extract({
-          //fallback: 'style-loader',
-          //use: ['css-loader', 'sass-loader'],
-          //publicPath: '/dist' 
-        //}) // doesn't work with Hot Module Replacement
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: cssConfig
       },
       {
         test: /\.js$/,
@@ -59,7 +63,7 @@ module.exports = {
     }),
     new ExtractTextPlugin({
       filename: "app.css",
-      disable: true,
+      disable: !isProd,
       allChunks: true
     }),
     new webpack.HotModuleReplacementPlugin(),

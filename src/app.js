@@ -8,4 +8,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-console.log('Hot module replacemant works!');
+console.log('Hot module replacemant works.');
