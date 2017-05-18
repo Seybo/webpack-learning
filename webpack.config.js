@@ -1,6 +1,7 @@
-const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   entry: {
@@ -14,11 +15,12 @@ module.exports = {
   module: {
     rules: [
       { test: /\.scss$/, 
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-          publicPath: '/dist' 
-        })
+        //use: ExtractTextPlugin.extract({
+          //fallback: 'style-loader',
+          //use: ['css-loader', 'sass-loader'],
+          //publicPath: '/dist' 
+        //}) // doesn't work with Hot Module Replacement
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.js$/,
@@ -34,6 +36,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
+    hot: true,
     stats: 'errors-only'
     //open: true // to autoopen page on server start
   },
@@ -45,7 +48,7 @@ module.exports = {
       //},
       hash: true,
       excludeChunks: ['contact'],
-      template: './src/index.pug' // Load a custom template (ejs by default see the FAQ for details)
+      template: './src/index.pug' 
     }),
     new HtmlWebpackPlugin({
       title: 'Contact Page',
@@ -56,7 +59,10 @@ module.exports = {
     }),
     new ExtractTextPlugin({
       filename: "app.css",
+      disable: true,
       allChunks: true
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
   ]
 }
