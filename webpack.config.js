@@ -33,7 +33,11 @@ module.exports = {
       },
       {
         test: /\.pug$/,
-        loaders: ['html-loader', 'pug-html-loader']
+        use: ['html-loader', 'pug-html-loader']
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: 'file-loader?name=images/[name].[ext]'
       }
     ]
   },
